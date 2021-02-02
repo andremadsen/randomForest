@@ -11,7 +11,7 @@ install.packages(c("randomForest", "partykit", "ggplot2", "pROC", "caret", "arul
 
 
 #=================================================================
-# Set up dataframe from the bigger dataframe, eliminating NAs
+# Set up dataframe from the bigger dataframe
 #=================================================================
 
 #Define Outcome variable in main dataframe
