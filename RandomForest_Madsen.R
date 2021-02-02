@@ -118,7 +118,7 @@ dev.off()
 
 #Evaluate randomForest overall model classification performance (training dataset) by ROC curve
 library(pROC)
-RFmodel <- randomForest(Outcome ~ ., data=train.MLdata, ntree=1001, mtry=1, proximity=TRUE)
+RFmodel <- randomForest(Outcome ~ ., data=train.MLdata, ntree=1001, mtry=3, proximity=TRUE)
 
 library(pROC)
 rf.roc <- roc(train.MLdata$Outcome, RFmodel$votes[,2])
@@ -141,7 +141,7 @@ coords(rf.roc, "best", transpose=TRUE, ret=c("threshold", "ppv", "npv", "sens", 
 
 
 #Dataframe to compare reference and model predictions + votes (training + test datasets)
-RFmodel <- randomForest(Outcome ~ ., data=test.MLdata, ntree=1001, mtry=1, proximity=TRUE)
+RFmodel <- randomForest(Outcome ~ ., data=test.MLdata, ntree=1001, mtry=3, proximity=TRUE)
 p <- data.frame(RFmodel$votes, RFmodel$predicted, Data.imputed$Outcome)
 head(p)
 
