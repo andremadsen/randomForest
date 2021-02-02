@@ -118,7 +118,7 @@ dev.off()
 
 #Evaluate randomForest overall model classification performance (training dataset) by ROC curve
 library(pROC)
-RFmodel <- randomForest(Outcome ~ ., data=train.MLdata, ntree=1001, mtry=3, proximity=TRUE)
+RFmodel <- randomForest(Outcome ~ ., data=train.MLdata, ntree=1001, mtry=1, proximity=TRUE)
 
 library(pROC)
 rf.roc <- roc(train.MLdata$Outcome, RFmodel$votes[,2])
@@ -129,9 +129,9 @@ coords(rf.roc, "best", transpose=TRUE, ret=c("threshold", "ppv", "npv", "sens", 
 
 
 #Evaluate randomForest model classification performance by ROC curve (test dataset) by ROC CURVE
+RFmodel <- randomForest(Outcome ~ ., data=train.MLdata, ntree=1001, mtry=1, proximity=TRUE)
 result <- data.frame(test.MLdata$Outcome, predict(RFmodel, test.MLdata[,2:6], type="response"),
                      predict(RFmodel, test.MLdata[,2:6], type="prob"))
-result
 
 library(pROC)
 rf.roc <- roc(result$test.MLdata.Outcome, result$X1)
@@ -140,18 +140,7 @@ auc(rf.roc)
 coords(rf.roc, "best", transpose=TRUE, ret=c("threshold", "ppv", "npv", "sens", "spec", "accuracy"))
 
 
-#Dataframe to compare reference and model predictions + votes (training + test datasets)
-RFmodel <- randomForest(Outcome ~ ., data=test.MLdata, ntree=1001, mtry=3, proximity=TRUE)
-p <- data.frame(RFmodel$votes, RFmodel$predicted, Data.imputed$Outcome)
-head(p)
-
-#Generate data frame of predictions
-pred = data.frame(predict(RFmodel, type="prob"),
-                  actual=test.MLdata$Outcome,
-                  thresh0.5=predict(RFmodel))
-head(pred)
-confusionMatrix(pred$thresh0.5, pred$actual)
-
-#Change probability threshold of 0.3 (instead of 0.5) for classifying prediction "Pubertal"
-pred$thresh0.3 = factor(ifelse(pred$Outcome > 0.3, "Pubertal", "Prepubertal"))
-confusionMatrix(pred$thresh0.3, pred$actual)
+#Confusion matrix for ML test dataset
+head(result)
+str(result)
+confusionMatrix(result[,2], result[,1])
