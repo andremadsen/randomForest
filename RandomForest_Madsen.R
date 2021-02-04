@@ -145,3 +145,8 @@ head(result)
 str(result)
 library(caret)
 confusionMatrix(result[,2], result[,1])
+
+#Feature importance in the 'RFmodel'
+Importance <- varImp(RFmodel)
+print(Importance)
+varImpPlot(RFmodel, col="blue")
