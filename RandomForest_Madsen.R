@@ -1,9 +1,10 @@
 #######################
-#R code: endocrine profiling with outcome variable = female puberty status
+# R code: endocrine profiling with outcome variable = female puberty status
 
-#In this project I apply the 'random forest' machine learning algorithm 
-#to the Bergen Growth Study 2 [vekststudien.no] female dataset, in order to predict Tanner breast stage from the endocrine profile
-#SUPERVISED MACHINE LEARNING
+# In this project I apply the 'random forest' machine learning algorithm 
+# to the Bergen Growth Study 2 [vekststudien.no] female dataset, in order to predict Tanner breast stage from the endocrine profile featured here:
+# https://andremadsen.shinyapps.io/ML_randomForest_Female_Puberty/
+# SUPERVISED MACHINE LEARNING
 #=======================================================================================
 
 install.packages(c("randomForest", "partykit", "ggplot2", "pROC", "caret", "arulesViz", "Rgraphviz", "sp","rpart"))
@@ -22,7 +23,7 @@ main$Outcome <- main$Tanner_B <- ifelse(main$Tanner_B == 1, "Prepubertal",
 Data <- data.frame(main$Outcome, main$V1, main$V2, main$V3, main$V4, main$V5)
 colnames(Data) <- c("Outcome","Hormone1","Hormone2","Hormone3","Hormone4", "Hormone5")
 
-Data$Outcome          #Outcome variable e.g. ordinal Tanner puberty stage
+Data$Outcome          #Response or outcome variable e.g. Prepubertal/Pubertal
 Data$Hormone1         #feature/dependent variable#1 e.g. hormone, nmol/L
 Data$Hormone2         #feature/dependent variable#2 e.g. hormone, nmol/L   
 Data$Hormone3         #feature/dependent variable#3 e.g. hormone, nmol/L
